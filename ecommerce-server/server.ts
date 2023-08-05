@@ -2,7 +2,9 @@ import express, { Request, Response } from "express";
 import products from './data/products.js'
 import dotenv from 'dotenv'
 import cors from 'cors'
+import connectDB from "./config/db.js";
 
+connectDB();
 
 dotenv.config();
 const port : string = process.env.PORT!;
