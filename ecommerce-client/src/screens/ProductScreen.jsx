@@ -1,13 +1,15 @@
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import axios from 'axios'
+import { useRecoilState } from 'recoil'
 import { Image, ListGroup, Row, Col, Card, Button } from 'react-bootstrap';
 import Rating from '../components/Rating';
+import {currentProductState} from '../../store/atoms/productByIdApiAtom'
 
 axios.defaults.baseURL = 'http://localhost:5000'
 
 const ProductScreen = () => {
-    const [product, setProduct] = useState({});
+    const [product, setProduct] = useRecoilState(currentProductState);
     const { id: productId } = useParams();
 
     useEffect(() => {
