@@ -3,40 +3,38 @@ import { useRecoilState } from 'recoil'
 import { Col, Row } from 'react-bootstrap'
 import axios from 'axios'
 import Product from './Product'
-import {productState} from '../../store/atoms/productsApiAtom'
+import { productState } from '../../store/atoms/productsApiAtom'
 import Loader from '../components/Loader'
 import Message from '../components/Message'
-
-axios.defaults.baseURL = 'http://localhost:5000'
+import { BASE_URL } from '../config'
 
 const HomeScreen = () => {
   const [products, setProducts] = useRecoilState(productState);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const { data } = await axios.get('/api/products');
+        const { data } = await axios.get(`${BASE_URL}/api/products`);
         setProducts(data);
-        setLoading(false); 
+        setLoading(false);
       } catch (err) {
-        setError(err); 
+        setError(err);
         setLoading(false);
       }
     };
     fetchProducts();
   }, [setProducts]);
 
-if (loading) {
-  return <Loader />;
-}
+  if (loading) {
+    return <Loader />;
+  }
 
-if (error) {
-  return <Message variant={'danger'}> {error.message} </Message>
-}
-  
+  if (error) {
+    return <Message variant={'danger'}> {error.message} </Message>
+  }
+
   return (
     <>
       <h1>

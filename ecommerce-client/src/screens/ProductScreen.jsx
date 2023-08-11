@@ -4,40 +4,41 @@ import axios from 'axios'
 import { useRecoilState } from 'recoil'
 import { Image, ListGroup, Row, Col, Card, Button } from 'react-bootstrap';
 import Rating from '../components/Rating';
-import {currentProductState} from '../../store/atoms/productByIdApiAtom'
+import { currentProductState } from '../../store/atoms/productByIdApiAtom'
 import Loader from '../components/Loader';
 import Message from '../components/Message';
+import { BASE_URL } from '../config'
 
-axios.defaults.baseURL = 'http://localhost:5000'
+
 
 const ProductScreen = () => {
 
     const { id: productId } = useParams();
     const [product, setProduct] = useRecoilState(currentProductState);
     const [loading, setLoading] = useState(true);
-    const [error, setError] = useState(null); 
-    
-  useEffect(() => {
-    const fetchProduct = async () => {
-      try {
-        const { data } = await axios.get(`/api/products/${productId}`);
-        setProduct(data);
-        setLoading(false); 
-      } catch (err) {
-        setError(err); 
-        setLoading(false);
-      }
-    };
-    fetchProduct();
-  }, [setProduct]);
+    const [error, setError] = useState(null);
 
-if (loading) {
-  return <Loader />;
-}
+    useEffect(() => {
+        const fetchProduct = async () => {
+            try {
+                const { data } = await axios.get(`${BASE_URL}/api/products/${productId}`);
+                setProduct(data);
+                setLoading(false);
+            } catch (err) {
+                setError(err);
+                setLoading(false);
+            }
+        };
+        fetchProduct();
+    }, [setProduct]);
 
-if (error) {
-    return <Message variant={'danger'}> {error.message} </Message>
-  }
+    if (loading) {
+        return <Loader />;
+    }
+
+    if (error) {
+        return <Message variant={'danger'}> {error.message} </Message>
+    }
 
     return (
         <>
