@@ -9,8 +9,6 @@ import Loader from '../components/Loader';
 import Message from '../components/Message';
 import { BASE_URL } from '../config'
 
-
-
 const ProductScreen = () => {
 
     const { id: productId } = useParams();
