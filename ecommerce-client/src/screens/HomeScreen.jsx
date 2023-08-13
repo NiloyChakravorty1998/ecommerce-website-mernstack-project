@@ -3,10 +3,10 @@ import { useRecoilState } from 'recoil'
 import { Col, Row } from 'react-bootstrap'
 import axios from 'axios'
 import Product from './Product'
-import { productState } from '../../store/atoms/productsApiAtom'
 import Loader from '../components/Loader'
 import Message from '../components/Message'
 import { BASE_URL } from '../config'
+import { productState } from '../../store/atoms/productsAtom'
 
 const HomeScreen = () => {
   const [products, setProducts] = useRecoilState(productState);
