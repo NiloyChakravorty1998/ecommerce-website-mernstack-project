@@ -17,6 +17,7 @@ const CartScreen = () => {
     );
     updatedCart.cartItems = updatedCartItems;
     setCartSt(updatedCart);
+    localStorage.setItem('cart', JSON.stringify(updatedCart));
 };
 
   const { cartItems } = cartSt;
