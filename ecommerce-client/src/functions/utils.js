@@ -20,7 +20,7 @@ export const addToCart = (currentState, item) => {
 
     // Calculate the shipping price
     updatedState.shippingPrice = addDecimals(updatedState.itemsPrice > 100 ? 0 : 10);
-        
+        console.log(updatedState.shippingPrice);
     // Calculate the tax price
     updatedState.taxPrice = addDecimals(Number((0.15 * updatedState.itemsPrice).toFixed(2)));
 
@@ -31,6 +31,7 @@ export const addToCart = (currentState, item) => {
         Number(updatedState.taxPrice)
     ).toFixed(2);
 
+    
 
     // Save the cart to localStorage
     localStorage.setItem('cart', JSON.stringify(updatedState));
