@@ -31,9 +31,15 @@ export const addToCart = (currentState, item) => {
         Number(updatedState.taxPrice)
     ).toFixed(2);
 
-    
-
     // Save the cart to localStorage
     localStorage.setItem('cart', JSON.stringify(updatedState));
     return updatedState;
 };
+
+export const removeFromCart = (currentState, item) => {
+    const updatedState = {...currentState};
+    let productId = item._id;
+    updatedState.cartItems = updatedState.cartItems.filter((x) => x._id !== productId);
+    localStorage.setItem('cart', JSON.stringify(updatedState));
+    return updatedState;
+}
