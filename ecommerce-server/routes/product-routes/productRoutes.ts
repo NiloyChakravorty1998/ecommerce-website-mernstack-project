@@ -1,6 +1,6 @@
 import express from 'express'
-import getProductById from '../controllers/product/getProductById';
-import getAllProducts from '../controllers/product/getAllProducts';
+import getProductById from '../../controllers/product/getProductById';
+import getAllProducts from '../../controllers/product/getAllProducts';
 const productRouter = express.Router();
 
 productRouter.get('/', getAllProducts);
