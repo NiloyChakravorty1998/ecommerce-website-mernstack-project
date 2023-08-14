@@ -1,15 +1,14 @@
 import express from 'express';
-import {
-  authUser,
-  registerUser,
-  logoutUser,
-  getUserProfile,
-  updateUserProfile,
-  getUsers,
-  deleteUser,
-  getUserById,
-  updateUser,
-} from '../../controllers/user/userController';
+import { registerUser } from '../../controllers/user/registerUser';
+import { getUsers } from '../../controllers/user/getUsers';
+import { authUser } from '../../controllers/user/authUser';
+import { logoutUser } from '../../controllers/user/logoutUser';
+import { getUserProfile } from '../../controllers/user/getUserProfile';
+import { updateUserProfile } from '../../controllers/user/updateUserProfile';
+import { deleteUser } from '../../controllers/user/deleteUser';
+import { getUserById } from '../../controllers/user/getUserById';
+import { updateUser } from '../../controllers/user/updateUser';
+
 
 
 const userRouter = express.Router();
