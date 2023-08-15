@@ -8,22 +8,21 @@ import { updateUserProfile } from '../../controllers/user/updateUserProfile';
 import { deleteUser } from '../../controllers/user/deleteUser';
 import { getUserById } from '../../controllers/user/getUserById';
 import { updateUser } from '../../controllers/user/updateUser';
-
-
+import { protect, admin } from '../../middleware/authMiddleware';
 
 const userRouter = express.Router();
 
-userRouter.route('/').post(registerUser).get(getUsers);
+userRouter.route('/').post(registerUser).get(protect, admin, getUsers);
 userRouter.post('/auth', authUser);
 userRouter.post('/logout', logoutUser);
 userRouter
   .route('/profile')
-  .get(getUserProfile)
-  .put(updateUserProfile);
+  .get(protect, getUserProfile)
+  .put(protect, updateUserProfile);
 userRouter
   .route('/:id')
-  .delete(deleteUser)
-  .get(getUserById)
-  .put(updateUser);
+  .delete(protect, admin, deleteUser)
+  .get(protect, admin, getUserById)
+  .put(protect, admin, updateUser);
 
 export default userRouter;
