@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import jwt from 'jsonwebtoken';
 import asyncHandler from "../../middleware/asyncHandler";
 import User from "../../models/userModel";
+import generateToken from "../../utils/generateToken";
 
 // @access  Public
 export const authUser = asyncHandler(async (req : Request, res : Response) => {
@@ -9,16 +10,7 @@ export const authUser = asyncHandler(async (req : Request, res : Response) => {
   const user = await User.findOne({ email  : email}) //searching for an user with the same email
   
   if(user && ( await user.matchPassword(password) )){
-    
-    const token = jwt.sign({userId: user._id!}, process.env.JWT_SECRET!, {expiresIn:'30d'});
-
-    //set jwt as http-only cookie
-    res.cookie('jwt', token, {
-        httpOnly: true,
-        secure: process.env.NODE_ENV !== 'development',
-        sameSite: 'strict',
-        maxAge: 30*60*60*1000
-    });
+    generateToken(res, user._id); // generates jwt token and sets into the http cookie
 
     res.status(200).json(
         {
