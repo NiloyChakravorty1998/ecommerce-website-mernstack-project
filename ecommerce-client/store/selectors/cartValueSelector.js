@@ -5,14 +5,15 @@ import { addDecimals } from "../../src/functions/utils";
 export const cartValueSelector = selector({
     key: 'cartValueSelector',
     get: ({ get }) => {
-        const cart = get(cartState); 
+        const cartSt = get(cartState); 
+        const cart = {...cartSt};
         cart.itemsPrice = addDecimals(
             cart.cartItems.reduce((acc, item) => acc + item.price * item.qty, 0)
         );
     
         // Calculate the shipping price
         cart.shippingPrice = addDecimals(cart.itemsPrice > 100 ? 0 : 10);
-            console.log(cart.shippingPrice);
+            
         // Calculate the tax price
         cart.taxPrice = addDecimals(Number((0.15 * cart.itemsPrice).toFixed(2)));
     

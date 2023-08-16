@@ -1,29 +1,37 @@
-import { Link, useNavigate } from "react-router-dom"
-import { useRecoilState } from "recoil";
-import { cartState } from "../../store/atoms/cartState";
-import { Button, Card, Col, Form, Image, ListGroup, Row } from "react-bootstrap";
-import Message from "../components/Message";
-import { FaTrash } from "react-icons/fa";
-import { removeFromCart } from "../functions/utils";
-
+import  { useEffect } from 'react'; // Import React and useEffect
+import { Link, useNavigate } from 'react-router-dom';
+import { useRecoilState, useRecoilValue } from 'recoil';
+import { cartState } from '../../store/atoms/cartState';
+import { Button, Card, Col, Form, Image, ListGroup, Row } from 'react-bootstrap';
+import Message from '../components/Message';
+import { FaTrash } from 'react-icons/fa';
+import { removeFromCart } from '../functions/utils';
+import { cartValueSelector } from '../../store/selectors/cartValueSelector';
 
 const CartScreen = () => {
   const navigate = useNavigate();
   const [cartSt, setCartSt] = useRecoilState(cartState);
 
+  const cartValue = useRecoilValue(cartValueSelector);
+
   const addToCartHandler = async (product, newQty) => {
-    const updatedCart = { ...cartSt }; 
+    const updatedCart = { ...cartValue };
     const updatedCartItems = updatedCart.cartItems.map((item) =>
-        item._id === product._id ? { ...item, qty: newQty } : item
+      item._id === product._id ? { ...item, qty: newQty } : item
     );
     updatedCart.cartItems = updatedCartItems;
     setCartSt(updatedCart);
-    localStorage.setItem('cart', JSON.stringify(updatedCart));
-};
-  const handleRemoveItem = (item) =>{
-    const updatedSt = removeFromCart(cartSt,item);
+  };
+
+  const handleRemoveItem = (item) => {
+    const updatedSt = removeFromCart(cartSt, item);
     setCartSt(updatedSt);
-  }
+  };
+
+  // Use useEffect to update local storage whenever cartSt changes
+  useEffect(() => {
+    localStorage.setItem('cart', JSON.stringify(cartValue));
+  }, [cartSt, cartValue]);
 
   const handleCheckout = () => {
     navigate('/login?redirect=/shipping')
