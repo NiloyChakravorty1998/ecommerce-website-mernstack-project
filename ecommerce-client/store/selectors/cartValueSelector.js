@@ -25,7 +25,6 @@ export const cartValueSelector = selector({
         ).toFixed(2);
     
         // Save the cart to localStorage
-        localStorage.setItem('cart', JSON.stringify(cart));
         return cart;
     },
 });

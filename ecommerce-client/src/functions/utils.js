@@ -43,3 +43,8 @@ export const removeFromCart = (currentState, item) => {
     localStorage.setItem('cart', JSON.stringify(updatedState));
     return updatedState;
 }
+
+export const setCredentials = (currentState) => {
+    const state = {...currentState};
+    
+}

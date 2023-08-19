@@ -17,7 +17,10 @@ const app = express();
 app.use(cookieParser());
 app.use(express.json());
 app.use(express.urlencoded({ extended : true }))
-app.use(cors());
+app.use(cors({
+    origin: 'http://localhost:5173', // Update with your frontend's URL
+    credentials: true, // Allow cookies to be included in the request
+  }));
 
 app.use('/api/products', productRouter);
 app.use('/api/users', userRouter);
